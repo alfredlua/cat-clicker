@@ -15,6 +15,7 @@ main {
 
 .cat img {
 	width: 100%;
+	cursor: pointer;
 }
 
 .counter {
