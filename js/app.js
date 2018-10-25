@@ -1,29 +1,35 @@
 "use strict";
 
-// Declarations
+// List cats
 
-let nameOne = "Meow";
-let nameTwo = "Meh";
-let catOneName = document.querySelector('.cat-one-name');
-let catTwoName = document.querySelector('.cat-two-name');
+let nums = [1,2,3,4,5];
+let names = [1,2,3,4,5];
+let list = document.querySelector('.list');
 
-let catOne = document.querySelector('.cat-one-image');
-let catTwo = document.querySelector('.cat-two-image');
-let catOneCount = document.querySelector('.cat-one-count');
-let catTwoCount = document.querySelector('.cat-two-count');
-let catOneClicks = 1;
-let catTwoClicks = 1;
+// Let's loop over the numbers in our array
+for (let i = 0; i < nums.length; i++) {
 
-// Update cats' name
-catOneName.innerHTML = nameOne;
-catTwoName.innerHTML = nameTwo;
+    // This is the number we're on...
+    let num = nums[i];
+    	name = names[i];
 
-// Track and update click counters
+    // We're creating a DOM element for the number
+    let elem = document.createElement('div');
+    elem.innerHTML = `<div class="cat-${num}">
+						  <div>
+							  <p>${name}</p>
+						  </div>
+    				  	  <div class="cat">
+						      <img src="images/cat-${num}.jpg" alt="A cute cat">
+					  	  </div>
+					  </div>`;
 
-catOne.addEventListener('click', () => {
-	catOneCount.innerHTML = catOneClicks++;
-});
+    // TODO: Change display when clicked
+    elem.addEventListener('click', (function(numCopy) {
+        return function() {
+            alert(numCopy);
+        };
+    })(num));
 
-catTwo.addEventListener('click', () => {
-	catTwoCount.innerHTML = catTwoClicks++;
-});
+    list.appendChild(elem);
+};
