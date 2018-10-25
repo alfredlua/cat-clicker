@@ -1,6 +1,6 @@
 # Cat Clicker
 
-A simple game where you just have to click on a cat image - yay!
+A simple game where you just have to click on two cat images - yay!
 
 ## How to play
 
