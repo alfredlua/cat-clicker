@@ -2,34 +2,49 @@
 
 // List cats
 
-let nums = [1,2,3,4,5];
-let names = [1,2,3,4,5];
+let names = ["Meow", "Meh", "Huh", "Yay", "What"];
 let list = document.querySelector('.list');
+let display = document.querySelector('.display');
 
 // Let's loop over the numbers in our array
-for (let i = 0; i < nums.length; i++) {
+for (let i = 0; i < names.length; i++) {
 
-    // This is the number we're on...
-    let num = nums[i];
-    	name = names[i];
+    // This is the name we're on...
+    let name = names[i];
+    let num = 0;
 
     // We're creating a DOM element for the number
     let elem = document.createElement('div');
-    elem.innerHTML = `<div class="cat-${num}">
+    elem.innerHTML = `<div class="cat-${name}">
 						  <div>
 							  <p>${name}</p>
 						  </div>
-    				  	  <div class="cat">
-						      <img src="images/cat-${num}.jpg" alt="A cute cat">
+    				  	  <div class="cat-image">
+						      <img src="images/${name}.jpg" alt="A cute cat">
 					  	  </div>
 					  </div>`;
 
-    // TODO: Change display when clicked
-    elem.addEventListener('click', (function(numCopy) {
-        return function() {
-            alert(numCopy);
+    // Change displayed cat when clicked
+    elem.addEventListener('click', ((nameCopy, numCopy) => {
+        return () => {
+            display.innerHTML = `<div class="cat-${nameCopy}">
+        						    <div>
+        							    <p>${nameCopy}</p>
+        						    </div>
+            				  	    <div class="cat-image">
+        						        <img src="images/${nameCopy}.jpg" alt="A cute cat">
+        					  	    </div>
+        					  	    <div>
+        					  	    	<p>Number of clicks: ${numCopy}</p>
+        					  	    </div>
+        					  	</div>`;
+        	// TODO: Add event listener for clicks
+        	let catImage = document.querySelector(".cat-image");
+        	catImage.addEventListener('click', (numCopy) => {
+        		numCopy++;
+        	});
         };
-    })(num));
+    })(name, num));
 
     list.appendChild(elem);
 };

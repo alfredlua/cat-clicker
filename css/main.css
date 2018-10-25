@@ -2,6 +2,25 @@ header {
 	text-align: center;
 }
 
-.cat img {
+main {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.list {
+	margin-left: 20px;
+	margin-right: 50px;
+}
+
+.list .cat-image img {
 	width: 100px;
+}
+
+.display {
+	width: 20%;
+}
+
+.display .cat-image img {
+	width: 100%;
 }
