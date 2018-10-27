@@ -13,9 +13,9 @@ for (let i = 0; i < names.length; i++) {
     let name = names[i];
     let num = 0;
 
-    // We're creating a DOM element for the number
-    let elem = document.createElement('div');
-    elem.innerHTML = `<div class="cat-${name}">
+    // We're creating a DOM element for each cat
+    let cat = document.createElement('div');
+    cat.innerHTML = `<div class="cat-${name}">
 						  <div>
 							  <p>${name}</p>
 						  </div>
@@ -25,26 +25,31 @@ for (let i = 0; i < names.length; i++) {
 					  </div>`;
 
     // Change displayed cat when clicked
-    elem.addEventListener('click', ((nameCopy, numCopy) => {
+    cat.addEventListener('click', ((numCopy) => {
         return () => {
-            display.innerHTML = `<div class="cat-${nameCopy}">
+        	let selectedCat = document.createElement('div');
+        	display.innerHTML = '';
+            selectedCat.innerHTML = `<div class="cat-${name}">
         						    <div>
-        							    <p>${nameCopy}</p>
+        							    <p>${name}</p>
         						    </div>
             				  	    <div class="cat-image">
-        						        <img src="images/${nameCopy}.jpg" alt="A cute cat">
+        						        <img src="images/${name}.jpg" alt="A cute cat">
         					  	    </div>
         					  	    <div>
-        					  	    	<p>Number of clicks: ${numCopy}</p>
+        					  	    	<p>Number of clicks: <span class="count">${numCopy}</span></p>
         					  	    </div>
         					  	</div>`;
-        	// TODO: Add event listener for clicks
-        	let catImage = document.querySelector(".cat-image");
-        	catImage.addEventListener('click', (numCopy) => {
-        		numCopy++;
-        	});
-        };
-    })(name, num));
 
-    list.appendChild(elem);
+        	display.appendChild(selectedCat);
+
+        	// Add event listener for clicks
+        	selectedCat.onclick = () => {
+        		numCopy++;
+        		document.querySelector('.count').innerHTML = numCopy;
+        	};
+        };
+    })(num));
+
+    list.appendChild(cat);
 };
