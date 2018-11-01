@@ -1,55 +1,89 @@
 "use strict";
 
-// List cats
+$(function() {
 
-let names = ["Meow", "Meh", "Huh", "Yay", "What"];
-let list = document.querySelector('.list');
-let display = document.querySelector('.display');
+    /*
+    *  Model
+    */
 
-// Let's loop over the numbers in our array
-for (let i = 0; i < names.length; i++) {
+    let model = {
+        currentCat: 0,
+        cats: [
+            {name: "Meow", count: 0},
+            {name: "Meh", count: 0},
+            {name: "Huh", count: 0},
+            {name: "Yay", count: 0},
+            {name: "What", count: 0}
+            ]
+    };
 
-    // This is the name we're on...
-    let name = names[i];
-    let num = 0;
+    /*
+    *  Octopus
+    */
 
-    // We're creating a DOM element for each cat
-    let cat = document.createElement('div');
-    cat.innerHTML = `<div class="cat-${name}">
-						  <div>
-							  <p>${name}</p>
-						  </div>
-    				  	  <div class="cat-image">
-						      <img src="images/${name}.jpg" alt="A cute cat">
-					  	  </div>
-					  </div>`;
+    let octopus = {
+        init: () => {
+            model.currentCat = model.cats[0];
+            listView.init();
+            displayView.init();
+        },
 
-    // Change displayed cat when clicked
-    cat.addEventListener('click', ((numCopy) => {
-        return () => {
-        	let selectedCat = document.createElement('div');
-        	display.innerHTML = '';
-            selectedCat.innerHTML = `<div class="cat-${name}">
-        						    <div>
-        							    <p>${name}</p>
-        						    </div>
-            				  	    <div class="cat-image">
-        						        <img src="images/${name}.jpg" alt="A cute cat">
-        					  	    </div>
-        					  	    <div>
-        					  	    	<p>Number of clicks: <span class="count">${numCopy}</span></p>
-        					  	    </div>
-        					  	</div>`;
+        getCats: () => {
+            return model.cats;
+        },
 
-        	display.appendChild(selectedCat);
+        getCurrentCat: () => {
+            return model.currentCat;
+        }
+    };
 
-        	// Add event listener for clicks
-        	selectedCat.onclick = () => {
-        		numCopy++;
-        		document.querySelector('.count').innerHTML = numCopy;
-        	};
-        };
-    })(num));
+    /*
+    *  List View
+    */
 
-    list.appendChild(cat);
-};
+    let listView = {
+        init: () => {
+            this.list = $('.list');
+            this.render();
+        },
+
+        render: () => {
+            octopus.getCats().forEach((cat) => {
+                // List cats
+                let elem = document.createElement('div');
+                elem.innerHTML = `<p>${cat.name}</p>`;
+
+                // Add event listener to select a cat
+                elem.addEventListener('click', ((catCopy) => {
+                    return () => {
+                        //displayView.render();
+                    };
+                })(cat));
+
+                this.list.append(elem);
+            });
+
+        }
+    };
+
+    /*
+    *  Display View
+    */
+
+    let displayView = {
+        init: () => {
+            this.catName = $('.cat-name');
+            this.catImage = $('.cat-image');
+            this.catCount = $('.cat-count');
+
+            this.render();
+        },
+
+        render: () => {
+            this.catName.textContent = `<p>test</p>`;
+        }
+    };
+
+    octopus.init();
+
+}());
