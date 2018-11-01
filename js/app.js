@@ -1,29 +1,89 @@
 "use strict";
 
-// Declarations
+$(function() {
 
-let nameOne = "Meow";
-let nameTwo = "Meh";
-let catOneName = document.querySelector('.cat-one-name');
-let catTwoName = document.querySelector('.cat-two-name');
+    /*
+    *  Model
+    */
 
-let catOne = document.querySelector('.cat-one-image');
-let catTwo = document.querySelector('.cat-two-image');
-let catOneCount = document.querySelector('.cat-one-count');
-let catTwoCount = document.querySelector('.cat-two-count');
-let catOneClicks = 1;
-let catTwoClicks = 1;
+    let model = {
+        currentCat: 0,
+        cats: [
+            {name: "Meow", count: 0},
+            {name: "Meh", count: 0},
+            {name: "Huh", count: 0},
+            {name: "Yay", count: 0},
+            {name: "What", count: 0}
+            ]
+    };
 
-// Update cats' name
-catOneName.innerHTML = nameOne;
-catTwoName.innerHTML = nameTwo;
+    /*
+    *  Octopus
+    */
 
-// Track and update click counters
+    let octopus = {
+        init: () => {
+            model.currentCat = model.cats[0];
+            listView.init();
+            displayView.init();
+        },
 
-catOne.addEventListener('click', () => {
-	catOneCount.innerHTML = catOneClicks++;
-});
+        getCats: () => {
+            return model.cats;
+        },
 
-catTwo.addEventListener('click', () => {
-	catTwoCount.innerHTML = catTwoClicks++;
-});
+        getCurrentCat: () => {
+            return model.currentCat;
+        }
+    };
+
+    /*
+    *  List View
+    */
+
+    let listView = {
+        init: () => {
+            this.list = $('.list');
+            this.render();
+        },
+
+        render: () => {
+            octopus.getCats().forEach((cat) => {
+                // List cats
+                let elem = document.createElement('div');
+                elem.innerHTML = `<p>${cat.name}</p>`;
+
+                // Add event listener to select a cat
+                elem.addEventListener('click', ((catCopy) => {
+                    return () => {
+                        //displayView.render();
+                    };
+                })(cat));
+
+                this.list.append(elem);
+            });
+
+        }
+    };
+
+    /*
+    *  Display View
+    */
+
+    let displayView = {
+        init: () => {
+            this.catName = $('.cat-name');
+            this.catImage = $('.cat-image');
+            this.catCount = $('.cat-count');
+
+            this.render();
+        },
+
+        render: () => {
+            this.catName.textContent = `<p>test</p>`;
+        }
+    };
+
+    octopus.init();
+
+}());
