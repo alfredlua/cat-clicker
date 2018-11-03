@@ -44,6 +44,7 @@ let octopus = {
         model.currentCat = model.cats[0];
         listView.init();
         displayView.init();
+        adminView.init();
     },
 
     // Get the array of cats
@@ -64,6 +65,12 @@ let octopus = {
     // Increase the click counter
     increaseCount: () => {
         model.currentCat.count++;
+        displayView.render();
+    },
+
+    // Update model with new data
+    updateCat: (name) => {
+        model.currentCat.name = name;
         displayView.render();
     }
 };
@@ -134,6 +141,38 @@ let displayView = {
         displayView.catImage.src = currentCat.image;
         // Show the number of clicks
         displayView.catCount.innerHTML = `<p>Number of clicks: ${currentCat.count}</p>`;
+    }
+};
+
+/*
+*  Admin View
+*/
+
+let adminView = {
+    init: () => {
+        // Store the DOM elements for easy access later
+        adminView.adminButton = document.getElementById('admin-button');
+        adminView.adminForm = document.getElementById('fields');
+        adminView.saveButton = document.getElementById('save-button');
+        adminView.cancelButton = document.getElementById('cancel-button')
+
+        // Add event listener to show or hide admin form
+        adminView.adminButton.addEventListener('click', (() => {
+            adminView.adminForm.classList.toggle('hide');
+        }));
+
+        // Render the admin view
+        adminView.render();
+    },
+
+    render: () => {
+        // Add event listener to save new data
+        adminView.saveButton.addEventListener('click', (() => {
+            return () => {
+                name = document.getElementById('new-name').value;
+                octopus.updateCat(name);
+            };
+        }));
     }
 };
 
