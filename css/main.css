@@ -13,14 +13,10 @@ main {
 	margin-right: 50px;
 }
 
-.list .cat-image img {
-	width: 100px;
-}
-
 .display {
 	width: 20%;
 }
 
-.display .cat-image img {
-	width: 100%;
+.display .cat-image {
+	max-width: 100%;
 }
