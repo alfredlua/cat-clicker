@@ -69,9 +69,19 @@ let octopus = {
     },
 
     // Update model with new data
-    updateCat: (name) => {
-        model.currentCat.name = name;
+    updateCat: () => {
+        model.currentCat.name = adminView.newName.value;
+        model.currentCat.image = adminView.newImage.value;
+        model.currentCat.count = adminView.newClicks.value;
+        //Render the display view
         displayView.render();
+        // Hide admin form
+        adminView.hide();
+
+        // Clear field text
+        adminView.newName.value = '';
+        adminView.newImage.value = '';
+        adminView.newClicks.value = '';
     }
 };
 
@@ -153,26 +163,31 @@ let adminView = {
         // Store the DOM elements for easy access later
         adminView.adminButton = document.getElementById('admin-button');
         adminView.adminForm = document.getElementById('fields');
+        adminView.newName = document.getElementById('new-name');
+        adminView.newImage = document.getElementById('new-url');
+        adminView.newClicks = document.getElementById('new-clicks');
         adminView.saveButton = document.getElementById('save-button');
-        adminView.cancelButton = document.getElementById('cancel-button')
+        adminView.cancelButton = document.getElementById('cancel-button');
 
         // Add event listener to show or hide admin form
         adminView.adminButton.addEventListener('click', (() => {
             adminView.adminForm.classList.toggle('hide');
         }));
 
-        // Render the admin view
-        adminView.render();
-    },
-
-    render: () => {
         // Add event listener to save new data
         adminView.saveButton.addEventListener('click', (() => {
-            return () => {
-                name = document.getElementById('new-name').value;
-                octopus.updateCat(name);
-            };
+            octopus.updateCat();
         }));
+
+        // Add event listener for cancel button
+        adminView.cancelButton.addEventListener('click', (() => {
+            adminView.hide();
+        }));
+    },
+
+    hide: () => {
+        // Hide admin form
+        adminView.adminForm.classList.add('hide');
     }
 };
 
